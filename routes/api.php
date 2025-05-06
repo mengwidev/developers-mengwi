@@ -1,25 +1,54 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\{
+    BanjarController,
+    ReligionController,
+    DisabilityController,
+    FamilyPlanningMethodController,
+    BloodTypeController,
+    PregnancyStatusController,
+    InsuranceTypeController,
+    HouseholdLevelController,
+    ElectronicIdController,
+    OccupationController,
+    LastEducationLevelController,
+    CurrentEducationLevelController,
+    GenderController,
+    ResidencyStatusController,
+    MaritalStatusController,
+    ElectronicIdStatusController,
+    NationalityController,
+    AgeGroupController,
+    ElderAgeGroupController,
+    SidLastEducationLevelController,
+};
 
-Route::apiResource("/v1/field/banjars", \App\Http\Controllers\Api\BanjarController::class);
-Route::apiResource("/v1/opensid/citizen-fields/last-education-levels", \App\Http\Controllers\Api\SidLastEducationLevelController::class);
-Route::apiResource("/v1/citizen-fields/religions", \App\Http\Controllers\Api\ReligionController::class);
-Route::apiResource('/v1/citizen-fields/disabilities', \App\Http\Controllers\Api\DisabilityController::class);
-Route::apiResource('/v1/citizen-fields/family-planning-methods', \App\Http\Controllers\Api\DisabilityController::class);
-Route::apiResource('/v1/citizen-fields/', \App\Http\Controllers\Api\FamilyPlanningMethodController::class);
-Route::apiResource('/v1/citizen-fields/blood-types', \App\Http\Controllers\Api\BloodTypeController::class);
-Route::apiResource('/v1/citizen-fields/pregnancy-statuses', \App\Http\Controllers\Api\PregnancyStatusController::class);
-Route::apiResource('/v1/citizen-fields/insurance-types', \App\Http\Controllers\Api\InsuranceTypeController::class);
-Route::apiResource('/v1/citizen-fields/household-levels', \App\Http\Controllers\Api\HouseholdLevelController::class);
-Route::apiResource('/v1/citizen-fields/electronic-ids', \App\Http\Controllers\Api\ElectronicIdController::class);
-Route::apiResource('/v1/citizen-fields/occupations', \App\Http\Controllers\Api\OccupationController::class);
-Route::apiResource('/v1/citizen-fields/last-education-levels', \App\Http\Controllers\Api\LastEducationLevelController::class);
-Route::apiResource('/v1/citizen-fields/current-education-levels', \App\Http\Controllers\Api\CurrentEducationLevelController::class);
-Route::apiResource('/v1/citizen-fields/genders', \App\Http\Controllers\Api\GenderController::class);
-Route::apiResource('/v1/citizen-fields/residency-statuses', \App\Http\Controllers\Api\ResidencyStatusController::class);
-Route::apiResource('/v1/citizen-fields/marital-statuses', \App\Http\Controllers\Api\MaritalStatusController::class);
-Route::apiResource('/v1/citizen-fields/electronic-id-statuses', \App\Http\Controllers\Api\ElectronicIdStatusController::class);
-Route::apiResource('/v1/citizen-fields/nationalities', \App\Http\Controllers\Api\NationalityController::class);
-Route::apiResource('/v1/citizen-fields/age-groups', \App\Http\Controllers\Api\AgeGroupController::class);
-Route::apiResource('/v1/citizen-fields/elder-age-groups', \App\Http\Controllers\Api\ElderAgeGroupController::class);
+Route::apiResource("/v1/field/banjars", BanjarController::class);
+
+// OpenSID Standard
+Route::prefix('v1/opensid/citizen-fields')->group(function () {
+    Route::apiResource("last-education-levels", SidLastEducationLevelController::class);
+});
+
+// Native Standard
+Route::prefix('v1/citizen-fields')->group(function () {
+    Route::apiResource('religions', ReligionController::class);
+    Route::apiResource('disabilities', DisabilityController::class);
+    Route::apiResource('family-planning-methods', FamilyPlanningMethodController::class);
+    Route::apiResource('blood-types', BloodTypeController::class);
+    Route::apiResource('pregnancy-statuses', PregnancyStatusController::class);
+    Route::apiResource('insurance-types', InsuranceTypeController::class);
+    Route::apiResource('household-levels', HouseholdLevelController::class);
+    Route::apiResource('electronic-ids', ElectronicIdController::class);
+    Route::apiResource('occupations', OccupationController::class);
+    Route::apiResource('last-education-levels', LastEducationLevelController::class);
+    Route::apiResource('current-education-levels', CurrentEducationLevelController::class);
+    Route::apiResource('genders', GenderController::class);
+    Route::apiResource('residency-statuses', ResidencyStatusController::class);
+    Route::apiResource('marital-statuses', MaritalStatusController::class);
+    Route::apiResource('electronic-id-statuses', ElectronicIdStatusController::class);
+    Route::apiResource('nationalities', NationalityController::class);
+    Route::apiResource('age-groups', AgeGroupController::class);
+    Route::apiResource('elder-age-groups', ElderAgeGroupController::class);
+});
