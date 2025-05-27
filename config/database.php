@@ -97,6 +97,21 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'SID_DB' => [
+            'driver' => 'mysql',
+            'host' => env('SIDDB_HOST', '127.0.0.1'),
+            'port' => env('SIDDB_PORT', '3306'),
+            'database' => env('SIDDB_DATABASE', 'SIDDB_5103022009'),
+            'username' => env('SIDDB_USERNAME', 'your_username'),
+            'password' => env('SIDDB_PASSWORD', 'your_password'),
+            'unix_socket' => env('SIDDB_SOCKET', ''),
+            'charset' => 'utf8mb3',
+            'collation' => env('SIDDB_COLLATION', 'utf8mb3_general_ci'),
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
@@ -111,6 +126,8 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
+
+
 
     ],
 
@@ -147,7 +164,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
             'persistent' => env('REDIS_PERSISTENT', false),
         ],
 

@@ -21,10 +21,16 @@ use App\Http\Controllers\Api\{
     NationalityController,
     AgeGroupController,
     ElderAgeGroupController,
+    SidArtikelController,
     SidLastEducationLevelController,
 };
 
 Route::apiResource("/v1/field/banjars", BanjarController::class);
+
+// OpenSID Artikel
+Route::prefix('v1/opensid')->group(function () {
+    Route::apiResource('artikel', SidArtikelController::class);
+});
 
 // OpenSID Standard
 Route::prefix('v1/opensid/citizen-fields')->group(function () {
