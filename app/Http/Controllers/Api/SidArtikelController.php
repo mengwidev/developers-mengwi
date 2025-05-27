@@ -12,13 +12,52 @@ class SidArtikelController extends Controller
     {
         $query = Artikel::with('kategori')->where('enabled', 1);
 
-        if ($request->has('tipe') && !empty($request->tipe)) {
+        if ($request->filled('tipe')) {
             $query->where('tipe', $request->tipe);
         }
 
-        $artikels = $query->paginate(10);
+        if ($request->has('exclude_latest')) {
+            $count = (int) $request->exclude_latest;
+            if ($count > 0) {
+                $latestQuery = Artikel::where('enabled', 1);
 
+                if ($request->filled('tipe')) {
+                    $latestQuery->where('tipe', $request->tipe);
+                }
+
+                $latestIds = $latestQuery
+                    ->orderByDesc('tgl_upload')
+                    ->limit($count)
+                    ->pluck('id');
+
+                if ($latestIds->isNotEmpty()) {
+                    $query->whereNotIn('id', $latestIds);
+                }
+            }
+        }
+
+        $query->orderByDesc('tgl_upload');
+
+        if ($request->filled('limit') && is_numeric($request->limit)) {
+            $artikels = $query->limit((int) $request->limit)->get();
+            return \App\Http\Resources\Sid\ArtikelResource::collection($artikels);
+        }
+
+        $artikels = $query->paginate(10);
         return \App\Http\Resources\Sid\ArtikelResource::collection($artikels);
+    }
+
+    public function latest(Request $request)
+    {
+        $query = Artikel::with('kategori')->where('enabled', 1);
+
+        if ($request->filled('tipe')) {
+            $query->where('tipe', $request->tipe);
+        }
+
+        $artikel = $query->orderByDesc('tgl_upload')->first();
+
+        return new \App\Http\Resources\Sid\ArtikelResource($artikel);
     }
 
     public function store(Request $request)

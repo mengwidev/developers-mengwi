@@ -29,7 +29,8 @@ Route::apiResource("/v1/field/banjars", BanjarController::class);
 
 // OpenSID Artikel
 Route::prefix('v1/opensid')->group(function () {
-    Route::apiResource('artikel', SidArtikelController::class);
+    Route::get('/artikel', [SidArtikelController::class, 'index']);
+    Route::get('/artikel/latest', [SidArtikelController::class, 'latest']);
 });
 
 // OpenSID Standard
