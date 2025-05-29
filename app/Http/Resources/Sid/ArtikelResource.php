@@ -14,8 +14,17 @@ class ArtikelResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $tgl = \Carbon\Carbon::parse($this->tgl_upload);
+
         return [
             'id' => $this->id,
+            'url' => sprintf(
+                'https://mengwi-badung.desa.id/artikel/%s/%s/%s/%s',
+                $tgl->format('Y'),
+                $tgl->format('m'),
+                $tgl->format('d'),
+                $this->slug
+            ),
             'tipe' => $this->tipe,
             'kategori' => $this->kategori->kategori ?? null,
             'hit' => $this->hit,
